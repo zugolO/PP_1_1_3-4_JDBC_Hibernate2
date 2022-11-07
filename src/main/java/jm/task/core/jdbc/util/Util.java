@@ -12,13 +12,23 @@ public class Util {
 
     public static Connection getConnection() {
         Connection connection;
-
         try {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return connection;
+    }
+    public static void closeConnection() {
+        Connection connection = getConnection();
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

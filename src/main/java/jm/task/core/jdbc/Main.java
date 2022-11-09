@@ -4,6 +4,8 @@ import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
+import java.util.Comparator;
+
 public class Main {
     private final static UserService user= new UserServiceImpl();
     public static void main(String[] args) {
@@ -15,12 +17,14 @@ public class Main {
         user.saveUser("Vladimir","Vladimirovich", (byte) 17);
 
         user.getAllUsers();
-        user.removeUserById(2);
+        user.removeUserById(3);
         user.cleanUsersTable();
         user.dropUsersTable();
+// Привет, я в отчаянии (ಥ﹏ಥ) В main`e все классно, а в тесте ошибка на getAllUsers. Направь меня на верный путь пожалуйста
+
+//        Util.closeConnection();
 
 
-        Util.closeConnection();
 
 
     }

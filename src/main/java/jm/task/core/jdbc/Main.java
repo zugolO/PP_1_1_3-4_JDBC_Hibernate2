@@ -20,7 +20,6 @@ public class Main {
         user.removeUserById(3);
         user.cleanUsersTable();
         user.dropUsersTable();
-// Привет, я в отчаянии (ಥ﹏ಥ) В main`e все классно, а в тесте ошибка на getAllUsers. Направь меня на верный путь пожалуйста
 
 //        Util.closeConnection();
 

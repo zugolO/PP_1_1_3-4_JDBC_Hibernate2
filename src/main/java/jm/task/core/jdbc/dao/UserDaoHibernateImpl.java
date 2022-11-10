@@ -5,11 +5,12 @@ import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserDaoHibernateImpl implements UserDao {
-    public static Transaction transaction;
+
+    private static Transaction transaction = null;
 
     public UserDaoHibernateImpl() {
 
@@ -20,30 +21,29 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS schema1.user" +
-                    "  id INT NOT NULL AUTO_INCREMENT," +
-                    "  name VARCHAR(45) NOT NULL," +
-                    "  lastName VARCHAR(45) NOT NULL," +
-                    "  age INT NOT NULL," +
-                    "  PRIMARY KEY (id);");
+                    "(id mediumint not null auto_increment," +
+                    "name VARCHAR(45)," +
+                    "lastname VARCHAR(45)," +
+                    "age tinyint," +
+                    "PRIMARY KEY (id))").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
+            e.getStackTrace();
         }
-
     }
+
 
     @Override
     public void dropUsersTable() {
         try (Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createSQLQuery("DROP TABLE IF EXISTS  schema1.user");
+            session.createSQLQuery("DROP TABLE IF EXISTS schema1.user").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
+            e.getStackTrace();
         }
-
     }
 
     @Override
@@ -55,10 +55,10 @@ public class UserDaoHibernateImpl implements UserDao {
             System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
+            e.getStackTrace();
         }
-
     }
+
 
     @Override
     public void removeUserById(long id) {
@@ -68,14 +68,15 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
+            e.getStackTrace();
         }
     }
+
 
     @Override
     public List<User> getAllUsers() {
         try (Session session = Util.getSessionFactory().openSession()) {
-            return session.createQuery("FROM User ").getResultList();
+            return session.createQuery("from User ").getResultList();
         }
     }
 
@@ -87,8 +88,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
-            e.printStackTrace();
+            e.getStackTrace();
         }
     }
-
 }
